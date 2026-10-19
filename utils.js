@@ -24,17 +24,27 @@ export async function DiscordRequest(endpoint, options) {
   return res;
 }
 
+
 export async function InstallGlobalCommands(appId, commands) {
-  // API endpoint to overwrite global commands
   const endpoint = `applications/${appId}/commands`;
 
   try {
-    // This is calling the bulk overwrite endpoint: https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-global-application-commands
-    await DiscordRequest(endpoint, { method: 'PUT', body: commands });
+    const response = await DiscordRequest(endpoint, {
+      method: 'PUT',
+      body: commands,
+    });
+
+    const registeredCommands = await response.json();
+
+    console.log(
+      'Registered commands:',
+      registeredCommands.map(command => command.name)
+    );
   } catch (err) {
-    console.error(err);
+    console.error('Failed to register commands:', err);
   }
 }
+
 
 // Simple method that returns a random emoji from list
 export function getRandomEmoji() {
