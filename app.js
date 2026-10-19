@@ -58,6 +58,19 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
       });
     }
 
+    //draft status command
+    if (name === 'draftstatus') {
+      return res.send({
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: {
+          content: 'No draft is currently active.'
+        }
+      });
+    }
+
+      
+
+
     // "challenge" command
     if (name === 'challenge' && id) {
       // Interaction context

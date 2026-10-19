@@ -44,8 +44,16 @@ const CHALLENGE_COMMAND = {
   contexts: [0, 2],
 };
 
+const DRAFT_STATUS_COMMAND = {
+  name: 'draftstatus',
+  description: 'Check the status of your draft',
+  type: 1,
+  integration_types: [0, 1],
+  contexts: [0, 1, 2],
+}
 
 
-const ALL_COMMANDS = [TEST_COMMAND, CHALLENGE_COMMAND];
+
+const ALL_COMMANDS = [TEST_COMMAND, CHALLENGE_COMMAND, DRAFT_STATUS_COMMAND];
 
 InstallGlobalCommands(process.env.APP_ID, ALL_COMMANDS);
