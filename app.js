@@ -10,6 +10,7 @@ import {
 } from 'discord-interactions';
 import { getRandomEmoji, DiscordRequest } from './utils.js';
 import { getShuffledOptions, getResult } from './game.js';
+import { loadData, saveData } from './Data/storage.js';
 
 // Create an express app
 const app = express();
@@ -68,6 +69,39 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
       });
     }
 
+    //Sign up command
+    if (name === 'signup'){
+      const user = req.body.member.user.user;
+      const userID = req.body.member.user.id;
+      const username = req.body.member.user.username;
+      const data = loadData();
+
+      if(!Array.isArray(data.signups)){
+        data.signups = [];
+      }
+
+      const existingSignup = data.signups.find(signup => signup.userID === userID);
+      if(existingSignup) {
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: `You are already signed up for this tournament, ${username}.`,
+            flags: InteractionResponseFlags.EPHEMERAL,
+          }
+        });
+      }
+
+      data.signups.push({ userID, username });
+      saveData(data);
+
+      return res.send({
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: {
+          content: `You have been signed up for the next tournament, ${username}.`,
+          flags: InteractionResponseFlags.EPHEMERAL,
+        }
+      });
+    }
       
 
 

@@ -52,8 +52,15 @@ const DRAFT_STATUS_COMMAND = {
   contexts: [0, 1, 2],
 }
 
+const SIGN_UP_COMMAND = {
+  name: 'signup',
+  description: 'Sign up for the next draft',
+  type: 1,
+  integration_types: [0],
+  contexts: [0],
+}
 
 
-const ALL_COMMANDS = [TEST_COMMAND, CHALLENGE_COMMAND, DRAFT_STATUS_COMMAND];
+const ALL_COMMANDS = [TEST_COMMAND, CHALLENGE_COMMAND, DRAFT_STATUS_COMMAND, SIGN_UP_COMMAND];
 
 InstallGlobalCommands(process.env.APP_ID, ALL_COMMANDS);
